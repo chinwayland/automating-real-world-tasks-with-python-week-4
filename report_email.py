@@ -3,6 +3,7 @@
 import os
 import datetime
 import reports
+import emails
 
 #pre_path = '/Users/waylandchin/source/week4/automating-real-world-tasks-with-python-week-4/'
 path_descriptions = 'supplier-data/descriptions/'
@@ -25,4 +26,11 @@ if __name__ == "__main__":
 	title = "Processed on {}\n".format(datetime.date.today())
 	attachment = '/tmp/processed.pdf'
 	reports.generate_report(attachment, title, paragraph)
+
+	subject = "Upload Completed - Online Fruit Store"
+	sender = "automation@example.com"
+	receiver = "{}@example.com".format(os.environ.get('USER'))
+	body = "All fruits were uploaded to our website succesfully. A detailed list is attached to this email."
+	message = emails.generage_email(sender, receiver, subject, body, attachment)
+	emails.send_email(message)
 
